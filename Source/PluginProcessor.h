@@ -13,6 +13,13 @@
 //==============================================================================
 /**
 */
+
+struct PointData {
+    juce::Point<float> point;
+    std::pair<float, float> vel;
+};
+
+
 class PhaseBoxAudioProcessor  : public juce::AudioProcessor
 {
 public:
@@ -29,6 +36,7 @@ public:
    #endif
 
     void processBlock (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
+    double softClip(float inputValue, float softClipFactor);
 
     //==============================================================================
     juce::AudioProcessorEditor* createEditor() override;
@@ -52,6 +60,11 @@ public:
     //==============================================================================
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
+
+    std::deque<PointData> movingPoints;
+
+    std::deque<juce::Point<float>> coords;
+    double threshPercent = 1.0;
 
 private:
     //==============================================================================
