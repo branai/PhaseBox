@@ -22,6 +22,23 @@ public:
 
     //==============================================================================
     void paint(juce::Graphics&) override;
+
+    // Something like this: https://forum.juce.com/t/get-project-root-path/37042/2
+    juce::File PhaseBoxAudioProcessorEditor::getProjectDir()
+    {
+
+        auto start = juce::File::getSpecialLocation(juce::File::currentExecutableFile);
+        while (start.exists() && !start.isRoot() && start.getFileName() != "Builds")
+            start = start.getParentDirectory();
+
+        if (start.getFileName() == "Builds")
+        {
+            auto resources = start.getSiblingFile("Resources");
+            if (resources.isDirectory())
+                return resources;
+
+        }
+    }
     void resized() override;
     juce::Point<float> mapToCoord(float x, float y);
     void timerCallback() override {
@@ -46,6 +63,11 @@ private:
     float lineLength;
 
     juce::Slider boxSizeSlider;
+
+    juce::File labelImageFile = getProjectDir().getChildFile("KnobLabel.png");
+    juce::File titleImageFile = getProjectDir().getChildFile("Title.png");
+    juce::Image labelImage = juce::ImageFileFormat::loadFrom(labelImageFile);
+    juce::Image titleImage = juce::ImageFileFormat::loadFrom(titleImageFile);
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PhaseBoxAudioProcessorEditor)
 };

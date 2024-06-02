@@ -32,8 +32,7 @@
   <EXPORTFORMATS>
     <VS2022 targetFolder="Builds/VisualStudio2022">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="PhaseBox" enablePluginBinaryCopyStep="1"
-                       vst3BinaryLocation="C:\Users\Bijan Naimi\Documents\vstdev\vst_builds"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="PhaseBox"/>
         <CONFIGURATION isDebug="0" name="Release" targetName="PhaseBox"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
